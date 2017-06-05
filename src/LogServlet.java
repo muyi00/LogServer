@@ -21,7 +21,7 @@ public class LogServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    private static final int MAX_LOGINFO = 100;
+    private static final int MAX_LOGINFO = 500;
 
     private List<String> logList = new ArrayList<String>();
     // private String htmlFormat = "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><title></title></head><body>%s<script type=\"text/javascript\">function myrefresh(){window.location.reload();window.scrollTo(0,document.body.scrollHeight);}setTimeout('myrefresh()',10000); </script></body></html>";
@@ -45,7 +45,7 @@ public class LogServlet extends HttpServlet {
         }
         String temp = String.format(getHtmlFormat(getInterval(timeStr)), sb.toString());
         PrintWriter out = resp.getWriter();
-        out.println(new String(temp.getBytes(), "GBK"));
+        out.println(new String(temp.getBytes(), "UTF-8"));
     }
 
     @Override
@@ -73,9 +73,9 @@ public class LogServlet extends HttpServlet {
         }
 
         if(result!=null&&result.length()>0){
-            logList.add(result);
+            logList.add(0,result);
             if (logList.size() > MAX_LOGINFO) {
-                logList.remove(0);
+                logList.remove(MAX_LOGINFO);
             }
         }
     }
@@ -86,6 +86,9 @@ public class LogServlet extends HttpServlet {
 
         try {
             LogInfo info=  JSON.parseObject(result,LogInfo.class);
+            if(info==null){
+                return "";
+            }
             if (name != null && name.length() > 0) {
                 if(!name.equals(info.getName())){
                     return "";
@@ -93,7 +96,9 @@ public class LogServlet extends HttpServlet {
             }
             sb.append("<span>{</span>");
             sb.append("<ul>");
-            sb.append("<li style=\"list-style-type:none\"> \"name\" : \""+info.getName()+"\"</li>");
+            if(info.getName()!=null&&info.getName().length()>0){
+                sb.append("<li style=\"list-style-type:none\"> \"name\" : \""+info.getName()+"\"</li>");
+            }
             sb.append("<li style=\"list-style-type:none\"> \"time\" : \""+info.getTime()+"\"</li>");
             sb.append("<li style=\"list-style-type:none\"> \"level\" : \""+info.getLevel()+"\"</li>");
             sb.append("<li style=\"list-style-type:none\"> \"tag\" : \""+info.getTag()+"\"</li>");
@@ -101,6 +106,7 @@ public class LogServlet extends HttpServlet {
             sb.append("<li style=\"list-style-type:none\"> \"msg\" : \""+info.getMsg().replace("\n","</br>")+"\"</li>");
             sb.append("</ul>");
             sb.append("<span>}</span>");
+            sb.append("</br>");
         }catch (JSONException e){
             sb.append(result);
         }
@@ -146,7 +152,7 @@ public class LogServlet extends HttpServlet {
         sb.append("%s");
         if(time!=0){
             sb.append("<script type=\"text/javascript\">");
-            sb.append("function myrefresh(){window.location.reload();window.scrollTo(0,document.body.scrollHeight);}setTimeout('myrefresh()'," + time + "); ");
+            sb.append("function myrefresh(){window.location.reload();}setTimeout('myrefresh()'," + time + "); ");//window.scrollTo(0,document.body.scrollHeight);
             sb.append("</script>");
         }
         sb.append("</div>");
