@@ -29,6 +29,7 @@ public class LogServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
+        resp.setContentType("text/html;charset=utf-8");
         req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
         resp.setHeader("content-type", "text/html;charset=UTF-8");
@@ -44,14 +45,16 @@ public class LogServlet extends HttpServlet {
             }
         }
         String temp = String.format(getHtmlFormat(getInterval(timeStr)), sb.toString());
+        System.out.println("GET："+temp);
         PrintWriter out = resp.getWriter();
-        out.println(new String(temp.getBytes(), "UTF-8"));
+        out.println(new String(temp.getBytes("UTF-8"), "UTF-8"));
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
+        //resp.setContentType("text/html;charset=UTF-8");
         InputStream inputStream = req.getInputStream();
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         String result = "";
@@ -73,6 +76,7 @@ public class LogServlet extends HttpServlet {
         }
 
         if(result!=null&&result.length()>0){
+            System.out.println(result);
             logList.add(0,result);
             if (logList.size() > MAX_LOGINFO) {
                 logList.remove(MAX_LOGINFO);
@@ -144,7 +148,7 @@ public class LogServlet extends HttpServlet {
         StringBuffer sb = new StringBuffer();
         sb.append("<html>");
         sb.append("<head>");
-        sb.append("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">");
+        sb.append("<meta http-equiv=\"Content-Type\" content=\"text/html;charset=UTF-8\">");
         sb.append("<title></title>");
         sb.append("</head>");
         sb.append("<body>");
