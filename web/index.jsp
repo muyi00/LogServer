@@ -2,18 +2,39 @@
 <html>
 <head>
     <title>日志显示服务</title>
+    <style type="text/css">
+        .wrapper {
+            width: 1020px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #FFF;
+        }
+    </style>
 </head>
 <body>
-    <div>
-        <h3>使用说明</h3>
-        <h6>所有日志共用缓存，最多缓存最近5000条</h6>
-        <ul>
-            <li>/log  显示日志</li>
-            <li>time=5   5秒刷新一次</li>
-            <li>name=1221@00000   输出帐号1221@00000日志</li>
-        </ul>
+<div class="wrapper">
+    <div class="panel-body mod-json">
+        <div>
+            <div class="row">
+                <label>服务器地址：</label>
+                <input type="radio" name="url" checked="true" >线上
+                <input type="radio"  name="url" >线下
+                <input type="radio"  name="url" >其他
+                <input type="text" >
+            </div>
+
+        </div>
+        <div class="row ui-mt-10">
+            <button id="confirm_button" class="btn btn-success ui-fl-r">生成QR图</button>
+        </div>
+        <div class="row ui-mt-20"><h4>结果</h4>
+            <hr class="x-hr">
+            <div id="preview">
+                <canvas width="200" height="200"></canvas>
+            </div>
+        </div>
     </div>
 
-
+</div>
 </body>
 </html>
