@@ -52,13 +52,15 @@
             服务器地址：
             <input type="radio" id="url_online" checked="true" onclick="url_online_change()">线上
             <input type="radio" id="url_offline" onclick="url_offline_change()">线下
+            <input type="radio" id="url_shuang" onclick="url_shuang_change()">双
+            <input type="radio" id="url_tao" onclick="url_tao_change()">涛
             <input type="radio" id="url_other" onclick="url_otherchange()">其他
         </div>
-        <div class="row" id="url_input_row" style="display:none;" >
+        <div class="row" id="url_input_row" style="display:none;">
             <input id="url" placeholder="请输入服务器地址" style="width:100%" type="text">
         </div>
 
-        <div class="row" style="display:none;" >
+        <div class="row" style="display:none;">
             是否开启环信：<input type="checkbox" id="isOpenHx" checked="true">
         </div>
         <div class="row">
@@ -76,7 +78,8 @@
 <script>
     var URL_COOL = "http://cool.haoyunqi.com.cn";
     var URL_220 = "http://192.168.2.220:8080/cool.web";
-
+    var URL_SHUANG = "http://192.168.2.21:8080/cool.shuang";
+    var URL_TAO = "http://192.168.2.20:8080/cool.web";
 
     var qrcode = new QRCode(document.getElementById("qrcode"), {
         text: "",
@@ -95,6 +98,10 @@
             url = URL_COOL;
         } else if (document.getElementById("url_offline").checked) {
             url = URL_220;
+        } else if (document.getElementById("url_shuang").checked) {
+            url = URL_SHUANG;
+        } else if (document.getElementById("url_tao").checked) {
+            url = URL_TAO;
         } else {
             var otherUrl = document.getElementById("url").value;
             var str = otherUrl.replace(/(^\s*)|(\s*$)/g, '');//去除空格;
@@ -109,8 +116,8 @@
         var isDebug = document.getElementById("isDebug").checked
         var isWriteLog = document.getElementById("isWriteLog").checked
 
-        var params={
-            "packageName":"com.dlh.hqy.psclient",
+        var params = {
+            "packageName": "com.dlh.hqy.psclient",
             "dateStr": getCurrentDateYYYYMMDD(),
             "urlStr": url,
             "openHx": isOpenHx,
@@ -128,6 +135,8 @@
     function url_online_change() {
         document.getElementById("url_online").checked = true;
         document.getElementById("url_offline").checked = false;
+        document.getElementById("url_shuang").checked = false;
+        document.getElementById("url_tao").checked = false;
         document.getElementById("url_other").checked = false;
         document.getElementById("url_input_row").style.display = 'none';
 
@@ -136,13 +145,36 @@
     function url_offline_change() {
         document.getElementById("url_online").checked = false;
         document.getElementById("url_offline").checked = true;
+        document.getElementById("url_shuang").checked = false;
+        document.getElementById("url_tao").checked = false;
         document.getElementById("url_other").checked = false;
         document.getElementById("url_input_row").style.display = 'none';
     }
 
+    function url_shuang_change() {
+        document.getElementById("url_online").checked = false;
+        document.getElementById("url_offline").checked = false;
+        document.getElementById("url_shuang").checked = true;
+        document.getElementById("url_tao").checked = false;
+        document.getElementById("url_other").checked = false;
+        document.getElementById("url_input_row").style.display = 'none';
+    }
+
+    function url_tao_change() {
+        document.getElementById("url_online").checked = false;
+        document.getElementById("url_offline").checked = false;
+        document.getElementById("url_shuang").checked = false;
+        document.getElementById("url_tao").checked = true;
+        document.getElementById("url_other").checked = false;
+        document.getElementById("url_input_row").style.display = 'none';
+    }
+
+
     function url_otherchange() {
         document.getElementById("url_online").checked = false;
         document.getElementById("url_offline").checked = false;
+        document.getElementById("url_shuang").checked = false;
+        document.getElementById("url_tao").checked = false;
         document.getElementById("url_other").checked = true;
         document.getElementById("url_input_row").style.display = 'block';
         document.getElementById("url").value = URL_220;
