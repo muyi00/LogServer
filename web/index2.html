@@ -1,0 +1,136 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>运气到家调试配置</title>
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style type="text/css">
+        .container {
+            visibility: visible !important;
+            opacity: 1 !important;
+            transition-property: opacity;
+            transition-duration: .4s;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            overflow-y: auto;
+            background-image: linear-gradient(-180deg, #4a6685, #4e3647);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .left {
+            width: 200px;
+            height: 100%;
+            float: left;
+            background: rgba(0, 0, 0, .3);
+        }
+
+        .right {
+            width: 100%;
+            height: 100%;
+
+        }
+
+        li {
+            height: 50px;
+            line-height: 50px;
+            list-style: none;
+            text-align: center;
+            width: 200px;
+        }
+
+        /*width: 30rem;*/
+        /*height: 30rem;*/
+        /*background-color: rgb(255, 255, 255);*/
+        /*margin: auto;*/
+        /*border-radius: 10px;*/
+        /*box-shadow: 0px 6px 7.84px 0.16px rgba(0, 47, 71, 0.3);*/
+        /*padding: 1.5625rem 3.75rem 3.5rem 3.75rem;*/
+        /*font-family: "Microsoft YaHei";*/
+
+        li.active {
+            color: #fff;
+            background: hsla(0, 0%, 100%, .1);
+        }
+
+        .options {
+            margin-top: 50px;
+        }
+
+        #tab_content {
+            margin-top: 50px;
+            position: absolute;
+            left: 200px;
+            float: left;
+            width: 800px;
+            background: white;
+            height: 800px;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0px 6px 7.84px 0.16px rgba(0, 47, 71, 0.3);
+
+        }
+
+        #tab_content .content {
+            left: 200px;
+            padding: 15px;
+            -moz-border-radius: 5px;
+            height: 800px;
+            border-radius: 10px;
+            box-shadow: 0px 6px 7.84px 0.16px rgba(0, 47, 71, 0.3);
+        }
+
+    </style>
+</head>
+<body>
+<div class='container'>
+    <div class="left">
+        <ul class="options" id='tabnav'>
+            <li class='active'><a href="#a">调试配置</a></li>
+            <li><a href="#b">远程日志</a></li>
+            <li><a href="#c">APP下载</a></li>
+        </ul>
+    </div>
+    <div class="right" id="tab_content">
+        <div id="a" class="content">
+            aaaaa
+        </div>
+        <div id="b" class="content">
+            bbbbb
+        </div>
+        <div id="c" class="content">
+            cccccc
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function changeStyle() {
+        this.onclick = function () {
+            var list = this.parentNode.childNodes;
+            for (var i = 0; i < list.length; i++) {
+                if (1 == list[i].nodeType && 'active' == list[i].className) {
+                    list[i].className = "";
+                }
+            }
+            this.className = 'active';
+        }
+    }
+    var tabs = document.getElementById('tabnav').childNodes;
+    for (var i = 0; i < tabs.length; i++) {
+        if (1 == tabs[i].nodeType) {
+            changeStyle.call(tabs[i]);
+        }
+    }
+</script>
+</body>
+</html>
