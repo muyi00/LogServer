@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>运气到家调试配置</title>
+    <script src="./js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="http://static.runoob.com/assets/jquery/2.0.3/jquery.min.js"></script>
     <script type="text/javascript" src="http://static.runoob.com/assets/qrcode/qrcode.min.js"></script>
 

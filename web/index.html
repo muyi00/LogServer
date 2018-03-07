@@ -6,21 +6,35 @@
     <script type="text/javascript" src="http://static.runoob.com/assets/qrcode/qrcode.min.js"></script>
 
     <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .rootDiv {
+            width: 100%;
+            height: 100%;
+            /*background-color: #0079b6;*/
+            background-image: linear-gradient(-180deg, #4a6685, #4e3647);
+        }
+
         .parent {
             position: absolute;
             top: 0;
             bottom: 0;
-            left: 0;
+            left: 200px;
             right: 0;
             padding-top: 8rem;
             min-height: 520px;
-            background-color: rgba(0, 0, 0, 0);
-            background-color: #0079b6;
         }
 
-        .child {
-            width: 30rem;
-            height: 30rem;
+
+        .content {
+            width: 40rem;
+            height: 40rem;
             background-color: rgb(255, 255, 255);
             margin: auto;
             border-radius: 10px;
@@ -43,39 +57,88 @@
             /*margin:auto;*/
         }
 
+        .left {
+            width: 200px;
+            height: 100%;
+            float: left;
+            background: rgba(0, 0, 0, .3);
+        }
+
+        li {
+            height: 50px;
+            line-height: 50px;
+            list-style: none;
+            text-align: center;
+            width: 200px;
+        }
+
+        li.active {
+            color: #fff;
+            background: hsla(0, 0%, 100%, .1);
+        }
+
+
     </style>
 </head>
 <body>
-<div class="parent">
-    <div class="child">
-        <div class="row">
-            服务器地址：
-            <input type="radio" id="url_online" checked="true" onclick="url_online_change()">线上
-            <input type="radio" id="url_offline" onclick="url_offline_change()">线下
-            <input type="radio" id="url_shuang" onclick="url_shuang_change()">双
-            <input type="radio" id="url_tao" onclick="url_tao_change()">涛
-            <input type="radio" id="url_other" onclick="url_otherchange()">其他
-        </div>
-        <div class="row" id="url_input_row" style="display:none;">
-            <input id="url" placeholder="请输入服务器地址" style="width:100%" type="text">
-        </div>
-
-        <div class="row" style="display:none;">
-            是否开启环信：<input type="checkbox" id="isOpenHx" checked="true">
-        </div>
-        <div class="row">
-            是否调试模式：<input type="checkbox" id="isDebug">
-        </div>
-        <div class="row">
-            日志是否写到文件中：<input type="checkbox" id="isWriteLog">
-        </div>
-        <button type="button" class="row" onclick="createQR()">生成二维码</button>
-        <div id="qrcode" class="qr"></div>
-
+<div class="rootDiv">
+    <div class="left">
+        <ul class="options" id='tabs'>
+            <li id="aaa" class='active'>调试配置</li>
+            <li id="bbb">远程日志</li>
+            <li id="ccc">APP下载</li>
+        </ul>
     </div>
+    <div class="parent">
+        <div id="a" class="content">
+            <div class="row">
+                服务器地址：
+                <input type="radio" id="url_online" checked="true" onclick="url_online_change()">线上
+                <input type="radio" id="url_offline" onclick="url_offline_change()">线下
+                <input type="radio" id="url_shuang" onclick="url_shuang_change()">双
+                <input type="radio" id="url_tao" onclick="url_tao_change()">涛
+                <input type="radio" id="url_other" onclick="url_otherchange()">其他
+            </div>
+            <div class="row" id="url_input_row" style="display:none;">
+                <input id="url" placeholder="请输入服务器地址" style="width:100%" type="text">
+            </div>
+
+            <div class="row" style="display:none;">
+                是否开启环信：<input type="checkbox" id="isOpenHx" checked="true">
+            </div>
+            <div class="row">
+                是否调试模式：<input type="checkbox" id="isDebug">
+            </div>
+            <div class="row">
+                日志是否写到文件中：<input type="checkbox" id="isWriteLog">
+            </div>
+            <button type="button" class="row" onclick="createQR()">生成二维码</button>
+            <div id="qrcode" class="qr"></div>
+        </div>
+    </div>
+
 </div>
+
 </body>
 <script>
+    function changeStyle() {
+        this.onclick = function () {
+            var list = this.parentNode.childNodes;
+            for (var i = 0; i < list.length; i++) {
+                if (1 == list[i].nodeType && 'active' == list[i].className) {
+                    list[i].className = "";
+                }
+            }
+            this.className = 'active';
+        }
+    }
+    var tabs = document.getElementById('tabs').childNodes;
+    for (var i = 0; i < tabs.length; i++) {
+        if (1 == tabs[i].nodeType) {
+            changeStyle.call(tabs[i]);
+        }
+    }
+
     var URL_COOL = "http://cool.haoyunqi.com.cn";
     var URL_220 = "http://192.168.2.220:8080/cool.web";
     var URL_SHUANG = "http://192.168.2.21:8080/cool.shuang";

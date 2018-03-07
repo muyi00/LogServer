@@ -49,18 +49,15 @@
             width: 200px;
         }
 
-        /*width: 30rem;*/
-        /*height: 30rem;*/
-        /*background-color: rgb(255, 255, 255);*/
-        /*margin: auto;*/
-        /*border-radius: 10px;*/
-        /*box-shadow: 0px 6px 7.84px 0.16px rgba(0, 47, 71, 0.3);*/
-        /*padding: 1.5625rem 3.75rem 3.5rem 3.75rem;*/
-        /*font-family: "Microsoft YaHei";*/
-
         li.active {
             color: #fff;
             background: hsla(0, 0%, 100%, .1);
+        }
+
+        a{
+            text-decoration: none;
+            color:#FFF;
+            display:block;
         }
 
         .options {
@@ -68,13 +65,14 @@
         }
 
         #tab_content {
+            width: 100rem;
+            height: 50rem;
             margin-top: 50px;
             position: absolute;
             left: 200px;
+            right: 200px;
             float: left;
-            width: 800px;
             background: white;
-            height: 800px;
             overflow: hidden;
             border-radius: 10px;
             box-shadow: 0px 6px 7.84px 0.16px rgba(0, 47, 71, 0.3);
@@ -82,10 +80,11 @@
         }
 
         #tab_content .content {
+            width: 100rem;
+            height: 50rem;
             left: 200px;
             padding: 15px;
             -moz-border-radius: 5px;
-            height: 800px;
             border-radius: 10px;
             box-shadow: 0px 6px 7.84px 0.16px rgba(0, 47, 71, 0.3);
         }
@@ -96,12 +95,12 @@
 <div class='container'>
     <div class="left">
         <ul class="options" id='tabnav'>
-            <li class='active'><a href="#a">调试配置</a></li>
-            <li><a href="#b">远程日志</a></li>
-            <li><a href="#c">APP下载</a></li>
+            <li onclick="javascript:document.getElementById('tab_a').click();" class='active'><a id="tab_a" href="#a">调试配置</a></li>
+            <li onclick="javascript:document.getElementById('tab_b').click();"><a id="tab_b" href="#b">远程日志</a></li>
+            <li onclick="javascript:document.getElementById('tab_c').click();"><a id="tab_c" href="#c">APP下载</a></li>
         </ul>
     </div>
-    <div class="right" id="tab_content">
+    <div id="tab_content">
         <div id="a" class="content">
             aaaaa
         </div>
@@ -123,6 +122,7 @@
                 }
             }
             this.className = 'active';
+
         }
     }
     var tabs = document.getElementById('tabnav').childNodes;
